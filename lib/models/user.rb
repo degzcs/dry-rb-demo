@@ -1,13 +1,4 @@
-require 'byebug'
-
-class User
-  UserNotFoundError = Class.new(StandardError)
-
-  attr_reader :first_name, :last_name, :id_number, :age
-
-  #
-  # Instance Methods
-  #
-
+class User < ActiveRecord::Base
+  validate_presence_of :first_name
 end
 
