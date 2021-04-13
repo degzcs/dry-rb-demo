@@ -1,0 +1,13 @@
+.img-size{
+  object-fit: cover;
+  max-height:360px;
+}
+
+.space{
+  margin-top: 10px;
+}
+
+.invisible {
+  visibility: hidden !important;
+  display: none !important;
+}
