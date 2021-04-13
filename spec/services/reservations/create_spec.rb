@@ -24,7 +24,7 @@ RSpec.describe Reservation::Create do
     let(:start_date) {  Time.current }
     let(:end_date) {'wrong-type' }
 
-    it 'should create a reservation successfully' do
+    it 'raises an error' do
       expect{ subject.call }.to raise_error(Dry::Types::ConstraintError)
     end
   end
