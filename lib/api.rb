@@ -6,10 +6,13 @@ class Api < Sinatra::Base
   end
 
   post '/reservations' do
-    Reservation::CreateValidator.new.call(params).to_monad
+    new_params = params == {} ? JSON.parse(request.body.read) : params
+    reservation = Reservation::CreateValidator.new.call(new_params).to_monad
     .bind { |valid_params| Reservation::Create.new(valid_params.to_h).call }
     .or do |result|
-        [500, {}, result.errors.messages.map(&:to_h).join(', ')]
+        message = result.is_a?(String) ? result : result.errors.messages.map(&:to_h).join(', ')
+        return [500, {}, message]
     end
+    reservation.to_json
 	end
 end

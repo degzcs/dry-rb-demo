@@ -8,6 +8,13 @@ Basic project for test concepts
 $ bundle install
 ```
 
+### Development
+to open a rails like console execute:
+
+```
+bundle exec irb -r ./lib/api.rb
+```
+
 ## Run Demo
 
 ```
