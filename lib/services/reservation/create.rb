@@ -1,9 +1,12 @@
 require 'dry/monads'
 
 class Reservation::Create
-  include Dry::Monads[:result]
+	include Dry::Monads[:result, :do]
+	include Dry::Monads::Do.for(:call)
   include Dry::Monads[:try]
   include Dry.Types
+	# include Do notation for #call method only
+	# OR include Do notation to all methods by default alongside the Result monad
   extend Dry::Initializer
 
   option :user, type: Instance(User), reader: :private
@@ -13,9 +16,9 @@ class Reservation::Create
   option :notes, type: Strict::String, reader: :private, optional: true
 
   def call
-    check_if_room_available
-      .bind { create_reservation }
-      .bind(method(:send_notification))
+    yield check_if_room_available
+		reservation_data = yield create_reservation
+		send_notification(reservation_data)
   end
 
   private
