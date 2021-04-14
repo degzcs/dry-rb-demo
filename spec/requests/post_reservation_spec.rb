@@ -11,7 +11,6 @@ RSpec.describe 'POST /resevations', type: :request do
   let(:start_date) {  Time.current }
   let(:end_date) {  Time.current + 1.day }
 
-
   let(:params) do
     {
       user_id: user_id,
